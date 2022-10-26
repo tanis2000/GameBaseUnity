@@ -1,11 +1,11 @@
 {
   "name": "com.valeriosantinelli.game-base-unity.Editor",
   "references": [
-    "com.valeriosantinelli.game-base-unity.Runtime",
-    "UnityEditor",
-    "UnityEditor.U2D"
+    "com.valeriosantinelli.game-base-unity.Runtime"
   ],
-  "includePlatforms": [],
+  "includePlatforms": [
+    "Editor"
+  ],
   "excludePlatforms": [],
   "allowUnsafeCode": false,
   "overrideReferences": false,
