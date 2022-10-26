@@ -1,0 +1,23 @@
+{
+    "name": "com.valeriosantinelli.game-base-unity",
+    "version": "0.1.0",
+    "displayName": "Game Base",
+    "description": "Valerio's Game Base for Unity",
+    "unity": "2021.3",
+    "unityRelease": "2f1",
+    "documentationUrl": "https://valeriosantinelli.com/",
+    "changelogUrl": "https://valeriosantinelli.com/changelog.html",
+    "licensesUrl": "https://valeriosantinelli.com/licensing.html",
+    "dependencies": {
+    },
+    "keywords": [
+        "utils",
+        "2d",
+        "starter"
+    ],
+    "author": {
+        "name": "Valerio Santinelli",
+        "email": "santinelli@gmail.com",
+        "url": "https://valeriosantinelli.com"
+    }
+}
