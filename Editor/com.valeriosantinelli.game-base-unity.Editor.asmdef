@@ -1,7 +1,9 @@
 {
   "name": "com.valeriosantinelli.game-base-unity.Editor",
   "references": [
-    "com.valeriosantinelli.game-base-unity.Runtime"
+    "com.valeriosantinelli.game-base-unity.Runtime",
+    "UnityEditor",
+    "UnityEditor.U2D"
   ],
   "includePlatforms": [],
   "excludePlatforms": [],
