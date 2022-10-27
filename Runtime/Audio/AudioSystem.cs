@@ -80,6 +80,7 @@ namespace GameBase.Audio
                     GameObject container = new GameObject();
                     container.name = typeof(AudioSystem).ToString();
                     instance = (AudioSystem)container.AddComponent(typeof(AudioSystem));
+                    
                     //if ( Application.isPlaying == false )
                     //    container.hideFlags = HideFlags.HideAndDontSave;
                 }
