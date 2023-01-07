@@ -33,5 +33,8 @@ namespace GameBase.Utils
 	
         public static bool IsIndexValid<T>( this T[] list, int index ) { return ( index >= 0 && index < list.Length ); }	
 
+        public static Vector3 Damp(Vector3 source, float factor, float deltaTime) {
+            return source * Mathf.Pow(factor, deltaTime);
+        }
     }
 }

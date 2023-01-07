@@ -34,6 +34,7 @@ namespace GameBase.Animations
         
         private void OnCollisionEnter(Collision collision)
         {
+            Debug.Log(collision.transform.name);
             Squash();
         }
 
