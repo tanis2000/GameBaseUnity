@@ -35,9 +35,21 @@ namespace GameBase.Leaderboards
         public LeaderboardMember member;
     }
     
+    [Serializable]
+    public class LeaderboardMemberData
+    {
+        public bool success;
+        public string publicID;
+        public int score;
+        public int rank;
+        public int expireAt;
+    }
+
+    
     public class ScoreSystem: MonoBehaviour
     {
         public Action OnLoaded;
+        public Action OnScoreLoaded;
         public Action OnSaved;
 
         public string GameName;
@@ -48,6 +60,7 @@ namespace GameBase.Leaderboards
         private const string BaseURL = "https://podium.altralogica.it";
 
         private LeaderboardData data;
+        private LeaderboardMemberData memberData;
 
         public static ScoreSystem Instance()
         {
@@ -102,6 +115,11 @@ namespace GameBase.Leaderboards
             return data;
         }
 
+        public LeaderboardMemberData GetMemberData()
+        {
+            return memberData;
+        }
+
         public void CancelLeaderboards()
         {
             StopAllCoroutines();
@@ -130,5 +148,31 @@ namespace GameBase.Leaderboards
                 Debug.LogWarning($"ScoreSystem error: ${req.error}");
             }
         }
+        
+        public void LoadScore(string playerId)
+        {
+            StartCoroutine(DoLoadScore(playerId));
+        }
+
+        public IEnumerator DoLoadScore(string playerId)
+        {
+            var req = UnityWebRequest.Get($"{BaseURL}/l/{GameName}/members/{playerId}");
+            yield return req.SendWebRequest();
+            if (string.IsNullOrEmpty(req.error))
+            {
+                var d = JsonUtility.FromJson<LeaderboardMemberData>(req.downloadHandler.text);
+                if (d.success)
+                {
+                    memberData = d;
+                    OnScoreLoaded?.Invoke();
+                }
+            }
+            else
+            {
+                Debug.LogWarning($"ScoreSystem error: ${req.error}");
+                OnScoreLoaded?.Invoke();
+            }
+        }
+
     }
 }
