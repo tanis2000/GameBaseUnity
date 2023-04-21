@@ -1,25 +1,27 @@
 using System;
+using GameBase.Utils;
 using UnityEngine;
 
 namespace GameBase.Animations.Actors
 {
-    public class Mover : MonoBehaviour
+    public class Hopper : MonoBehaviour
     {
-        public float MoveTimeInSeconds = 0.2f;
+        public float HopTimeInSeconds = 0.2f;
+        public float HopHeight = 10.0f;
+        public AnimationCurve Curve;
+        public Transform Visuals;
 
         private Vector3 originalPosition;
         private bool isRunning = false;
         private float timeCounterInSeconds = 0.0f;
-        private Vector3 finalPosition;
 
         private void Awake()
         {
+            originalPosition = Visuals.localPosition;
         }
 
-        public void Execute(Vector3 position)
+        public void Execute()
         {
-            originalPosition = transform.localPosition;
-            finalPosition = position;
             isRunning = true;
             timeCounterInSeconds = 0;
         }
@@ -32,15 +34,15 @@ namespace GameBase.Animations.Actors
             }
 
             timeCounterInSeconds += Time.deltaTime;
-            if (timeCounterInSeconds > MoveTimeInSeconds)
+            if (timeCounterInSeconds > HopTimeInSeconds)
             {
-                timeCounterInSeconds = MoveTimeInSeconds;
+                timeCounterInSeconds = HopTimeInSeconds;
                 isRunning = false;
             }
 
-            var ratio = timeCounterInSeconds / MoveTimeInSeconds;
-            var step = Vector3.Lerp(originalPosition, finalPosition, ratio);
-            transform.localPosition = step;
+            var ratio = timeCounterInSeconds / HopTimeInSeconds;
+            var step = Curve.Evaluate(ratio) * HopHeight;
+            Visuals.localPosition = Visuals.localPosition.WhereY(originalPosition.y + step);
         }
     }
 }

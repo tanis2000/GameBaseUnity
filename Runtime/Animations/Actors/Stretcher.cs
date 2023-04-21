@@ -4,19 +4,19 @@ using UnityEngine;
 
 namespace GameBase.Animations.Actors
 {
-    public class Hopper : MonoBehaviour
+    public class Stretcher : MonoBehaviour
     {
-        public float HopTimeInSeconds = 0.2f;
-        public float HopHeight = 10.0f;
-        public AnimationCurve Curve;
+        public float StretchTimeInSeconds = 0.2f;
+        public AnimationCurve HorizontalCurve;
+        public AnimationCurve VerticalCurve;
 
-        private Vector3 originalPosition;
+        private Vector3 originalScale;
         private bool isRunning = false;
         private float timeCounterInSeconds = 0.0f;
 
         private void Awake()
         {
-            originalPosition = transform.position;
+            originalScale = transform.localScale;
         }
 
         public void Execute()
@@ -33,15 +33,16 @@ namespace GameBase.Animations.Actors
             }
 
             timeCounterInSeconds += Time.deltaTime;
-            if (timeCounterInSeconds > HopTimeInSeconds)
+            if (timeCounterInSeconds > StretchTimeInSeconds)
             {
-                timeCounterInSeconds = HopTimeInSeconds;
+                timeCounterInSeconds = StretchTimeInSeconds;
                 isRunning = false;
             }
 
-            var ratio = timeCounterInSeconds / HopTimeInSeconds;
-            var step = Curve.Evaluate(ratio) * HopHeight;
-            transform.localPosition = transform.localPosition.WhereY(originalPosition.y + step);
+            var ratio = timeCounterInSeconds / StretchTimeInSeconds;
+            var scaleX = HorizontalCurve.Evaluate(ratio);
+            var scaleY = VerticalCurve.Evaluate(ratio);
+            transform.localScale = transform.localScale.WhereX(originalScale.x * scaleX).WhereY(originalScale.y * scaleY);
         }
     }
 }

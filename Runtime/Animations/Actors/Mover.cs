@@ -1,27 +1,26 @@
 using System;
+using GameBase.Utils;
 using UnityEngine;
 
 namespace GameBase.Animations.Actors
 {
-    public class Leaner : MonoBehaviour
+    public class Mover : MonoBehaviour
     {
-        public float Angle = 50.0f;
-        public float LeanTimeInSeconds = 0.2f;
+        public float MoveTimeInSeconds = 0.2f;
 
-        private Quaternion originalRotation;
+        private Vector3 originalPosition;
         private bool isRunning = false;
         private float timeCounterInSeconds = 0.0f;
-        private Quaternion finalRotation;
+        private Vector3 finalPosition;
 
         private void Awake()
         {
-            originalRotation = transform.rotation;
         }
 
-        public void Execute(Vector3 movementDirection)
+        public void Execute(Vector3 position)
         {
-            var direction = Vector3.Cross(Vector3.up, movementDirection);
-            finalRotation = originalRotation * Quaternion.Euler(direction * Angle);
+            originalPosition = transform.localPosition;
+            finalPosition = position;
             isRunning = true;
             timeCounterInSeconds = 0;
         }
@@ -30,20 +29,19 @@ namespace GameBase.Animations.Actors
         {
             if (!isRunning)
             {
-                transform.rotation = originalRotation;
                 return;
             }
 
             timeCounterInSeconds += Time.deltaTime;
-            if (timeCounterInSeconds > LeanTimeInSeconds)
+            if (timeCounterInSeconds > MoveTimeInSeconds)
             {
-                timeCounterInSeconds = LeanTimeInSeconds;
+                timeCounterInSeconds = MoveTimeInSeconds;
                 isRunning = false;
             }
 
-            var ratio = timeCounterInSeconds / LeanTimeInSeconds;
-            var step = Quaternion.Lerp(originalRotation, finalRotation, ratio);
-            transform.rotation = step;
+            var ratio = timeCounterInSeconds / MoveTimeInSeconds;
+            var step = Vector3.Lerp(originalPosition, finalPosition, ratio);
+            transform.localPosition = step;//.WhereY(transform.localPosition.y);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 namespace GameBase.Effects
@@ -117,6 +118,7 @@ namespace GameBase.Effects
         public static GameObject AddTextPopup(string content, Vector3 position)
         {
             var t = Instance.GetTextPopup();
+            t.transform.SetParent(Instance.transform);
             t.transform.position = position;
             t.Play(content);
             var go = t.gameObject;
