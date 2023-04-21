@@ -10,6 +10,11 @@ namespace GameBase.Animations
 
         private void Update()
         {
+            if (Target == null)
+            {
+                return;
+            }
+            
             transform.position = Vector3.Lerp(
                 transform.position,
                 Vector3.Lerp(
