@@ -16,15 +16,7 @@ namespace GameBase.Animations
 
         private void Awake()
         {
-            if (instance != null && instance != this)
-            {
-                Destroy(this.gameObject);
-                return;
-            }
-            else
-            {
-                instance = this;
-            }
+            instance = this;
 
             actions = new List<TweenAction>();
         }

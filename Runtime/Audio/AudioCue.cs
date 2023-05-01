@@ -29,7 +29,7 @@ namespace GameBase.Audio
                 return null;
             }
 
-            var rnd = new XRandom(42);
+            var rnd = AudioSystem.Instance().GetXRandom();
             return rnd.ItemWeighted(Clips, clip => clip.Weight);
         }
     }

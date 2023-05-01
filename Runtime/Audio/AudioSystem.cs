@@ -652,5 +652,10 @@ namespace GameBase.Audio
 
             return false;
         }
+
+        public XRandom GetXRandom()
+        {
+            return rnd;
+        }
     }
 }

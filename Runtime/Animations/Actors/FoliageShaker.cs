@@ -18,12 +18,12 @@ namespace GameBase.Animations.Actors
         private void Awake()
         {
             Visuals.material = Visuals.sharedMaterial;
+            Visuals.material.SetFloat(Frequency, 0);
         }
 
         private void OnTriggerEnter2D(Collider2D other)
         {
             frequency = Random.Range(0.1f, 0.7f);
-            Debug.Log(frequency);
             Visuals.material.SetFloat(Frequency, frequency);
             isRunning = true;
             timeCounterInSeconds = 0;

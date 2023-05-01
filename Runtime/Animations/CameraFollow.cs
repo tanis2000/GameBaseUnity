@@ -23,5 +23,20 @@ namespace GameBase.Animations
                     Factor),
                 Time.deltaTime * Smooth);
         }
+
+        public void Enable()
+        {
+            enabled = true;
+        }
+
+        public void Disable()
+        {
+            enabled = false;
+        }
+
+        public void SetTarget(Transform target)
+        {
+            Target = target;
+        }
     }
 }

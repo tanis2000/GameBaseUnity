@@ -11,7 +11,7 @@ using Random = UnityEngine.Random;
 
 namespace GameBase.Animations
 {
-    public class ButtonStyle : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+    public class ButtonStyle : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, ISelectHandler, IDeselectHandler
     {
         public bool AnimateColors;
         public List<Image> BgImages;
@@ -57,7 +57,7 @@ namespace GameBase.Animations
             originalFrontColor = Texts.First().color;
         }
 
-        public void OnPointerEnter(PointerEventData eventData)
+        public void Select()
         {
             ApplyScaling(ScaleAmount, TweenEasings.BounceEaseOut);
             ApplyRotation(Random.Range(-RotationAmount, RotationAmount), TweenEasings.BounceEaseOut);
@@ -65,10 +65,20 @@ namespace GameBase.Animations
             PlaySound(HoverSound);
         }
 
-        public void OnPointerExit(PointerEventData eventData)
+        public void Deselect()
         {
             PlaySound(HoverSound);
             Reset();
+        }
+
+        public void OnPointerEnter(PointerEventData eventData)
+        { 
+            Select();
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            Deselect();
         }
 
         public void OnPointerClick(PointerEventData eventData)
@@ -120,6 +130,16 @@ namespace GameBase.Animations
             ApplyScaling(0, TweenEasings.BounceEaseOut);
             ApplyRotation(0, TweenEasings.BounceEaseOut);
             ApplyColors(originalBackColor, originalFrontColor);
+        }
+
+        public void OnSelect(BaseEventData eventData)
+        {
+            Select();
+        }
+
+        public void OnDeselect(BaseEventData eventData)
+        {
+            Deselect();
         }
     }
 }
